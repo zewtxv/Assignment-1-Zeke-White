@@ -10,7 +10,7 @@ using namespace std;
 
 int increment = 0, tempNumber;
 
-int readDataFile(int numbersFromFile[150], int &arraySize) {
+int readDataFile(int numbersFromFile[], int &arraySize) {
     ifstream inFile;
     inFile.open("/Users/zekewhite/Desktop/School Spring 2023/CS 303/Assignment 1/Assignment-1-Zeke-White/testFile.txt");
 
@@ -26,7 +26,7 @@ int readDataFile(int numbersFromFile[150], int &arraySize) {
         while (getline(inSS, tempStr, ',')) {
             try {
                 tempNumber = stoi(tempStr);
-                numbersFromFile[increment] = (stoi(tempStr));
+                numbersFromFile[increment] = (tempNumber);
                 increment += 1;
             } catch (runtime_error e) {
                 cout << e.what();
@@ -35,12 +35,14 @@ int readDataFile(int numbersFromFile[150], int &arraySize) {
 
         }
     }
+    cout << numbersFromFile[0];
+    arraySize = increment;
     return 0;
 }
 
 char printMenu() {
     char userInput;
-    cout << "What would you like to do?" << endl;
+    cout << endl << "What would you like to do?" << endl;
     cout << "L - Look for an occurrence of a number" << endl;
     cout << "M - Modify a number at an index" << endl;
     cout << "A - Add an integer to the end of the array" << endl;
@@ -51,22 +53,30 @@ char printMenu() {
     return userInput;
 }
 
-//void wipe(int desired, int arraySize) {
-//
-//}
-//
-//void addToArray(int add, int arraySize) {
-//
-//}
-//
-//void modifyAtIndex(int seeked, int desired, int arraySize) {
-//
-//}
+void wipe(int desired, int &arraySize, int numbersFromFile[150]) {
+    if (desired > arraySize){
+        cout << "No value at this index to turn to 0" << endl;
+    }else{
+        numbersFromFile[desired] = 0;
+    }
+}
 
-void lookForNumber(int numberSeeked, int arraySize) {
+void addToArray(int add, int &arraySize, int numbersFromFile[150]) {
+numbersFromFile[arraySize + 1] = add;
+}
+
+void modifyAtIndex(int seeked, int desired, int &arraySize, int numbersFromFile[150]) {
+    if (seeked > arraySize){
+        cout << "No value at this index to modify" << endl;
+    }else{
+        numbersFromFile[seeked] = desired;
+    }
+}
+
+void lookForNumber(int numberSeeked, int &arraySize,int numbersFromFile[150]) {
     for (int i = 0; i < arraySize; i++) {
-        if (tempNumber == numberSeeked) {
-            cout << numberSeeked << " is found at index " << increment << endl;
+        if (numbersFromFile[i] == numberSeeked) {
+            cout << numberSeeked << " is found at index " << i << endl;
         }
     }
 
